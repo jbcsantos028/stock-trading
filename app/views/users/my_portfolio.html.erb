@@ -1,0 +1,21 @@
+<h1>My portfolio</h1>
+
+<div class='search-area'>
+  <h3>Request Stock Quote</h3>
+  <h6>Enter the symbol of the stock you are interested in.</h6>
+  <%= form_tag get_stock_quote_path, remote: true, method: :get do %>
+    <div class="form-group row">
+      <div class="col-sm-9 no-right-padding">
+        <%= text_field_tag :stock, params[:stock], placeholder: "ex. MSFT, AAPL, AMZN", autofocus: true, class: "form-control form-control-lg" %>
+      </div>
+      <div class="col-sm-3">
+        <%= button_tag type: :submit, class: "btn btn-success btn-lg" do %>
+          <%= 'Get Quote' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div id="quote">
+  
+</div>

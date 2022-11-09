@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2022_11_08_092504) do
   create_table "stocks", force: :cascade do |t|
     t.string "symbol"
     t.string "name"
-    t.decimal "last_price"
+    t.decimal "latest_price"
     t.decimal "shares"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
