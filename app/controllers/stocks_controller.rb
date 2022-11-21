@@ -12,19 +12,19 @@ class StocksController < ApplicationController
       @stock = Stock.new_quote(params[:stock])
       if @stock
         respond_to do |format|
-          format.js { render partial: 'transactions/quote' }
+          format.js { render partial: 'transactions/form' }
         end
       else
         respond_to do |format|
           flash.now[:alert] = "Please enter a valid stock symbol to search."
-          format.js { render partial: 'transactions/quote' }
+          format.js { render partial: 'transactions/form' }
         end
       end
       
     else
       respond_to do |format|
         flash.now[:alert] = "Please enter a stock symbol to search."
-        format.js { render partial: 'transactions/quote' }
+        format.js { render partial: 'transactions/form' }
       end
     end
   end

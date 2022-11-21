@@ -7,6 +7,7 @@
     <strong>Symbol: </strong><%= @stock.symbol %> |
     <strong>Company Name: </strong><%= @stock.name %> |
     <strong>Price: </strong><%= @stock.latest_price %>
+
     <% if current_user.stock_already_owned?(@stock.symbol) %>
       <% location = "/transactions/#{@owned_stock.id}" %>
       <% method_type = :patch  %>
@@ -14,6 +15,7 @@
       <% location = :transactions %>
       <% method_type = :post  %>
     <% end %>
+
     <% if @transaction_type_sell == "True" %>
       <% text_field_placeholder =  "Number of shares to sell..." %>
       <% submit_button_label = "Sell #{@stock.name}" %>
@@ -21,6 +23,7 @@
       <% text_field_placeholder =  "Number of shares to buy..." %>
       <% submit_button_label = "Buy #{@stock.name}" %>
     <% end %>
+
     <%= form_with(url: location, method: method_type, class: "rounded", local: true) do |f| %>
       <%= f.hidden_field :symbol, :value => @stock.symbol %>
       <% if @transaction_type_sell == "True" %>
@@ -29,5 +32,6 @@
       <%= f.text_field :shares, class: "form-control shadow rounded", placeholder: text_field_placeholder, id: "text-field-buy-stocks" %>
       <%= f.submit submit_button_label, class: "btn btn-success btn-sm" %>
     <% end %>
+    
   </div>
 <% end %>

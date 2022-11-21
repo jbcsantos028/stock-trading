@@ -26,7 +26,7 @@ require 'bigdecimal/util'
     @owned_stock = current_user.transactions.where(stock_id: @stock.id).first
 
     respond_to do |format|
-      format.js { render partial: 'transactions/quote' }
+      format.js { render partial: 'transactions/form' }
     end
     
   end
