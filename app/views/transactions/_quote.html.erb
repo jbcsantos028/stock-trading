@@ -14,7 +14,7 @@
       <% location = :transactions %>
       <% method_type = :post  %>
     <% end %>
-    <% if @transaction_type == "sell" %>
+    <% if @transaction_type_sell == "True" %>
       <% text_field_placeholder =  "Number of shares to sell..." %>
       <% submit_button_label = "Sell #{@stock.name}" %>
     <% else %>
@@ -23,8 +23,8 @@
     <% end %>
     <%= form_with(url: location, method: method_type, class: "rounded", local: true) do |f| %>
       <%= f.hidden_field :symbol, :value => @stock.symbol %>
-      <% if @transaction_type == "sell" %>
-        <%= hidden_field_tag :transaction_type, "sell" %>
+      <% if @transaction_type_sell == "True" %>
+        <%= hidden_field_tag :transaction_type_sell, "True" %>
       <% end %>
       <%= f.text_field :shares, class: "form-control shadow rounded", placeholder: text_field_placeholder, id: "text-field-buy-stocks" %>
       <%= f.submit submit_button_label, class: "btn btn-success btn-sm" %>

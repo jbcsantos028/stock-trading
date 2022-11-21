@@ -20,6 +20,7 @@ class StocksController < ApplicationController
           format.js { render partial: 'transactions/quote' }
         end
       end
+      
     else
       respond_to do |format|
         flash.now[:alert] = "Please enter a stock symbol to search."

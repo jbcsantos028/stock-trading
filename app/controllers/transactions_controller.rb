@@ -18,8 +18,8 @@ require 'bigdecimal/util'
   end
 
   def edit
-    if params[:transaction_type].present?
-      @transaction_type = params[:transaction_type]
+    if params[:transaction_type_sell].present?
+      @transaction_type_sell = params[:transaction_type_sell]
     end
 
     @stock = Stock.find(params[:id])
@@ -33,13 +33,15 @@ require 'bigdecimal/util'
 
   def update
     @transaction = Transaction.find(params[:id])
-    if params[:transaction_type].present?
+
+    if params[:transaction_type_sell] == "True"
       updated_shares = @transaction.shares - params[:shares].to_d
-      flash_message = "Sell successful!"
+      flash_message = "Selling successful!"
     else
       updated_shares = @transaction.shares + params[:shares].to_d
       flash_message = "Purchase successful!"
     end
+    
     @transaction.update(shares: updated_shares)
     flash[:notice] = flash_message
     redirect_to my_portfolio_path
