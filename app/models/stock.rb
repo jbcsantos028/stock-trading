@@ -1,4 +1,8 @@
 class Stock < ApplicationRecord
+  has_many :user_stocks
+  has_many :users, through: :user_stocks
+
+  #add validations here
 
   def self.new_quote(stock_symbol)
     client = IEX::Api::Client.new(publishable_token: Rails.application.credentials.iex_client[:public_key],
@@ -9,5 +13,9 @@ class Stock < ApplicationRecord
     rescue => exception
       return nil
     end
+  end
+
+  def self.check_db(symbol)
+    where(symbol: symbol).first
   end
 end
