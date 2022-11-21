@@ -21,7 +21,7 @@
       <% text_field_placeholder =  "Number of shares to buy..." %>
       <% submit_button_label = "Buy #{@stock.name}" %>
     <% end %>
-    <%= form_with(model: @user_stock, url: location, method: method_type, class: "rounded", local: true) do |f| %>
+    <%= form_with(url: location, method: method_type, class: "rounded", local: true) do |f| %>
       <%= f.hidden_field :symbol, :value => @stock.symbol %>
       <% if @transaction_type == "sell" %>
         <%= hidden_field_tag :transaction_type, "sell" %>

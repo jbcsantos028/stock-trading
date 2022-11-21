@@ -13,16 +13,16 @@
         </tr>
       </thead>
       <tbody>
-        <% @owned_stocks.each do |stock| %>
+        <% @owned_stocks.each do |user_stock| %>
           <tr>
-            <th scope="row"><%= stock.symbol %></th>
-            <td><%= stock.name %></td>
-            <td><%= stock_shares = stock.user_stocks.where(user: current_user).first.shares %></td>
-            <td><%= stock.latest_price %></td>
-            <td><%= stock_shares * stock.latest_price  %></td>
+            <th scope="row"><%= user_stock.stock.symbol %></th>
+            <td><%= user_stock.stock.name%></td>
+            <td><%= stock_shares = user_stock.shares %></td>
+            <td><%= latest_price = user_stock.stock.latest_price %></td>
+            <td><%= stock_shares * latest_price  %></td>
             <td>
               <%= form_tag edit_user_stock_path, remote: true, method: :get do %>
-                <%= hidden_field_tag :id, stock.id %>
+                <%= hidden_field_tag :id, user_stock.stock.id %>
                 <%= button_tag type: :submit, class: "btn btn-success btn-sm" do %>
                   <%= 'Buy' %>
                 <% end %>
@@ -31,7 +31,7 @@
             <td>
               <%= form_tag edit_user_stock_path, remote: true, method: :get do %>
                 <%= hidden_field_tag :transaction_type, "sell" %>
-                <%= hidden_field_tag :id, stock.id %>
+                <%= hidden_field_tag :id,  user_stock.stock.id %>
                 <%= button_tag type: :submit, class: "btn btn-danger btn-sm" do %>
                   <%= 'Sell' %>
                 <% end %>
