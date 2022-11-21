@@ -1,6 +1,6 @@
-class CreateUserStocks < ActiveRecord::Migration[6.1]
+class CreateTransactions < ActiveRecord::Migration[6.1]
   def change
-    create_table :user_stocks do |t|
+    create_table :transactions do |t|
       t.references :user, null: false, foreign_key: true
       t.references :stock, null: false, foreign_key: true
       t.decimal :shares

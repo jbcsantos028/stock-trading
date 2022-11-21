@@ -3,7 +3,7 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <th scope="col">Symbol</th>
+          <th scope="col">Stock Symbol</th>
           <th scope="col">Company Name</th>
           <th scope="col">Shares</th>
           <th scope="col">Price</th>
@@ -13,25 +13,25 @@
         </tr>
       </thead>
       <tbody>
-        <% @owned_stocks.each do |user_stock| %>
+        <% @owned_stocks.each do |owned_stock| %>
           <tr>
-            <th scope="row"><%= user_stock.stock.symbol %></th>
-            <td><%= user_stock.stock.name%></td>
-            <td><%= stock_shares = user_stock.shares %></td>
-            <td><%= latest_price = user_stock.stock.latest_price %></td>
+            <th scope="row"><%= owned_stock.stock.symbol %></th>
+            <td><%= owned_stock.stock.name%></td>
+            <td><%= stock_shares = owned_stock.shares %></td>
+            <td><%= latest_price = owned_stock.stock.latest_price %></td>
             <td><%= stock_shares * latest_price  %></td>
             <td>
-              <%= form_tag edit_user_stock_path, remote: true, method: :get do %>
-                <%= hidden_field_tag :id, user_stock.stock.id %>
+              <%= form_tag edit_transaction_path, remote: true, method: :get do %>
+                <%= hidden_field_tag :id, owned_stock.stock.id %>
                 <%= button_tag type: :submit, class: "btn btn-success btn-sm" do %>
                   <%= 'Buy' %>
                 <% end %>
               <% end %>
             </td>
             <td>
-              <%= form_tag edit_user_stock_path, remote: true, method: :get do %>
+              <%= form_tag edit_transaction_path, remote: true, method: :get do %>
                 <%= hidden_field_tag :transaction_type, "sell" %>
-                <%= hidden_field_tag :id,  user_stock.stock.id %>
+                <%= hidden_field_tag :id,  owned_stock.stock.id %>
                 <%= button_tag type: :submit, class: "btn btn-danger btn-sm" do %>
                   <%= 'Sell' %>
                 <% end %>

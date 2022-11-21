@@ -8,10 +8,10 @@
     <strong>Company Name: </strong><%= @stock.name %> |
     <strong>Price: </strong><%= @stock.latest_price %>
     <% if current_user.stock_already_owned?(@stock.symbol) %>
-      <% location = "/user_stocks/#{@owned_user_stock.id}" %>
+      <% location = "/transactions/#{@owned_stock.id}" %>
       <% method_type = :patch  %>
     <% else %>
-      <% location = :user_stocks %>
+      <% location = :transactions %>
       <% method_type = :post  %>
     <% end %>
     <% if @transaction_type == "sell" %>
