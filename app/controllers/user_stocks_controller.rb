@@ -1,6 +1,11 @@
 class UserStocksController < ApplicationController
 require 'bigdecimal/util'
 
+  def index
+    @owned_stocks = current_user.user_stocks
+    render :my_portfolio
+  end
+
   def create
     stock = Stock.check_db(params[:symbol])
     if stock.blank?
@@ -19,7 +24,7 @@ require 'bigdecimal/util'
     @stock = Stock.find(params[:id])
     @owned_user_stock = current_user.user_stocks.where(stock_id: @stock.id).first
     respond_to do |format|
-      format.js { render partial: 'users/quote' }
+      format.js { render partial: 'user_stocks/quote' }
     end
     
   end

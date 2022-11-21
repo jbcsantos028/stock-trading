@@ -10,18 +10,18 @@ class StocksController < ApplicationController
       end
       if @stock
         respond_to do |format|
-          format.js { render partial: 'users/quote' }
+          format.js { render partial: 'user_stocks/quote' }
         end
       else
         respond_to do |format|
           flash.now[:alert] = "Please enter a valid stock symbol to search."
-          format.js { render partial: 'users/quote' }
+          format.js { render partial: 'user_stocks/quote' }
         end
       end
     else
       respond_to do |format|
         flash.now[:alert] = "Please enter a stock symbol to search."
-        format.js { render partial: 'users/quote' }
+        format.js { render partial: 'user_stocks/quote' }
       end
     end
   end
