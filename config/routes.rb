@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :transaction_records, only: [:index]
   resources :transactions, only: [:create, :update]
   devise_for :users
   root to: 'transactions#index'

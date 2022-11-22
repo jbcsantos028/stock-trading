@@ -2,6 +2,7 @@ class StocksController < ApplicationController
   
 
   def get_quote
+    
     if params[:stock].present?
       
       stock = Stock.check_db(params[:stock])
@@ -27,7 +28,7 @@ class StocksController < ApplicationController
         format.js { render partial: 'transactions/form' }
       end
     end
+
   end
 
-  
 end

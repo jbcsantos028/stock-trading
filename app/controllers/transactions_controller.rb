@@ -7,12 +7,14 @@ require 'bigdecimal/util'
   end
 
   def create
-    stock = Stock.check_db(params[:symbol])
+    stock = Stock.check_db(transaction_params[:symbol]) #lines 11 to 14 can be done using find_or_create_by
     if stock.blank?
-      stock = Stock.new_quote(params[:symbol])
+      stock = Stock.new_quote(transaction_params[:symbol])
       stock.save
     end
-    @transaction = current_user.transactions.create(stock: stock, shares: params[:shares])
+    
+    @transaction = current_user.transactions.create(stock: stock, shares: transaction_params[:shares])
+    @transaction_record = current_user.transaction_records.create(stock_symbol: stock.symbol, company_name: stock.name, shares: transaction_params[:shares], price: stock.latest_price, transaction_type: "buy")
     flash[:notice] = "Purchase successful!"
     redirect_to my_portfolio_path
   end
@@ -22,8 +24,8 @@ require 'bigdecimal/util'
       @transaction_type_sell = params[:transaction_type_sell]
     end
 
-    @stock = Stock.find(params[:id])
-    @owned_stock = current_user.transactions.where(stock_id: @stock.id).first
+    @owned_stock = Transaction.find(params[:id])
+    @stock = @owned_stock.stock
 
     respond_to do |format|
       format.js { render partial: 'transactions/form' }
@@ -33,18 +35,28 @@ require 'bigdecimal/util'
 
   def update
     @transaction = Transaction.find(params[:id])
+    stock = @transaction.stock
 
     if params[:transaction_type_sell] == "True"
-      updated_shares = @transaction.shares - params[:shares].to_d
+      updated_shares = @transaction.shares - transaction_params[:shares].to_d
+      transaction_type = "sell"
       flash_message = "Selling successful!"
     else
-      updated_shares = @transaction.shares + params[:shares].to_d
+      updated_shares = @transaction.shares + transaction_params[:shares].to_d
+      transaction_type = "buy"
       flash_message = "Purchase successful!"
     end
     
     @transaction.update(shares: updated_shares)
+    @transaction_record = current_user.transaction_records.create(stock_symbol: stock.symbol, company_name: stock.name, shares: transaction_params[:shares], price: stock.latest_price, transaction_type: transaction_type)
     flash[:notice] = flash_message
     redirect_to my_portfolio_path
   end
+
+  private
+
+  def transaction_params
+    params.require(:transaction).permit(:symbol, :shares)
+  end 
 
 end

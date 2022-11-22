@@ -8,29 +8,15 @@
     <strong>Company Name: </strong><%= @stock.name %> |
     <strong>Price: </strong><%= @stock.latest_price %>
 
-    <% if current_user.stock_already_owned?(@stock.symbol) %>
-      <% location = "/transactions/#{@owned_stock.id}" %>
-      <% method_type = :patch  %>
-    <% else %>
-      <% location = :transactions %>
-      <% method_type = :post  %>
-    <% end %>
+    <% form_attributes = build_form_with_attributes(@owned_stock, @stock) %>
 
-    <% if @transaction_type_sell == "True" %>
-      <% text_field_placeholder =  "Number of shares to sell..." %>
-      <% submit_button_label = "Sell #{@stock.name}" %>
-    <% else %>
-      <% text_field_placeholder =  "Number of shares to buy..." %>
-      <% submit_button_label = "Buy #{@stock.name}" %>
-    <% end %>
-
-    <%= form_with(url: location, method: method_type, class: "rounded", local: true) do |f| %>
+    <%= form_with(scope: :transaction, url: form_attributes[:location], method: form_attributes[:method_type], class: "rounded", local: true) do |f| %>
       <%= f.hidden_field :symbol, :value => @stock.symbol %>
       <% if @transaction_type_sell == "True" %>
         <%= hidden_field_tag :transaction_type_sell, "True" %>
       <% end %>
-      <%= f.text_field :shares, class: "form-control shadow rounded", placeholder: text_field_placeholder, id: "text-field-buy-stocks" %>
-      <%= f.submit submit_button_label, class: "btn btn-success btn-sm" %>
+      <%= f.text_field :shares, class: "form-control shadow rounded", placeholder: form_attributes[:text_field_placeholder], id: "text-field-buy-stocks" %>
+      <%= f.submit form_attributes[:submit_button_label], class: "btn btn-success btn-sm" %>
     <% end %>
     
   </div>
