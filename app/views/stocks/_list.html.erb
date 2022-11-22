@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-9">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Stock Symbol</th>
+          <th scope="col">Company Name</th>
+          <th scope="col">Shares</th>
+          <th scope="col">Price</th>
+          <th scope="col">Total</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @owned_stocks.each do |owned_stock| %>
+          <tr>
+            <th scope="row"><%= owned_stock.stock.symbol %></th>
+            <td><%= owned_stock.stock.name%></td>
+            <td><%= stock_shares = owned_stock.shares %></td>
+            <td><%= latest_price = owned_stock.stock.latest_price %></td>
+            <td><%= stock_shares * latest_price  %></td>
+            <td>
+              <%= form_tag edit_transaction_path, remote: true, method: :get do %>
+                <%= hidden_field_tag :id, owned_stock.id %>
+                <%= button_tag type: :submit, class: "btn btn-success btn-sm" do %>
+                  <%= 'Buy' %>
+                <% end %>
+              <% end %>
+            </td>
+            <td>
+              <%= form_tag edit_transaction_path, remote: true, method: :get do %>
+                <%= hidden_field_tag :transaction_type_sell, "True" %>
+                <%= hidden_field_tag :id,  owned_stock.id %>
+                <%= button_tag type: :submit, class: "btn btn-danger btn-sm" do %>
+                  <%= 'Sell' %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="results-block">
+  <%= render 'layouts/messages' %>
+</div>
+
+<% if @stock %>
+  <div class="card card-header results-block">
+    <strong>Symbol: </strong><%= @stock.symbol %> |
+    <strong>Company Name: </strong><%= @stock.name %> |
+    <strong>Price: </strong><%= @stock.latest_price %>
+
+    <% form_attributes = build_form_with_attributes(@owned_stock, @stock) %>
+
+    <%= form_with(scope: :transaction, url: form_attributes[:location], method: form_attributes[:method_type], class: "rounded", local: true) do |f| %>
+      <%= f.hidden_field :symbol, :value => @stock.symbol %>
+      <% if @transaction_type_sell == "True" %>
+        <%= hidden_field_tag :transaction_type_sell, "True" %>
+      <% end %>
+      <%= f.text_field :shares, class: "form-control shadow rounded", placeholder: form_attributes[:text_field_placeholder], id: "text-field-buy-stocks" %>
+      <%= f.submit form_attributes[:submit_button_label], class: "btn btn-success btn-sm" %>
+    <% end %>
+    
+  </div>
+<% end %>

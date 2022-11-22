@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stock_symbol: MyString
+  company_name: MyString
+  shares: 9.99
+  price: 9.99
+  type: 
+  user: one
+
+two:
+  stock_symbol: MyString
+  company_name: MyString
+  shares: 9.99
+  price: 9.99
+  type: 
+  user: two
