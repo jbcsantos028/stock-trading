@@ -1,0 +1,32 @@
+<div class="mainContainer">
+
+    <div class="pageTitleContainer">
+        <div class="pageTitle">traders</div>
+    </div>
+
+    <div class="mainSubContainer">
+        <% if current_user.admin? %>
+            
+            <% @users.each do |user| %>
+                <div class="userContainer">
+                    <%= link_to user.email, user, class: "user-email" %>
+                    <%= user.approved %>
+
+                <div class="smallLinkContainer">
+                    <div class="smallLink">
+                        <%= link_to "Show", user %>
+                    </div>
+                    <div class="smallLink">
+                        <%= link_to "Edit", edit_user_path(user) %>
+                    </div>
+                    <div class="smallLink">
+                        <%= link_to "Delete", user_path(user),
+                            method: :delete,
+                            data: { confirm: "Are you sure?" } %>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+        <% end %>
+    </div>
+</div>

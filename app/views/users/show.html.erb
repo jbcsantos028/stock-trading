@@ -1,0 +1,17 @@
+<div class="mainContainer">
+    
+    <div class="formContainer">
+        <div class="pageTitle"><%= @user.email %></div>
+    </div>
+
+    <div class="allButtons">
+        <div class="smallLink">
+            <%= link_to "Edit", edit_user_path(@user) %>
+        </div>
+        <div class="smallLink">
+            <%= link_to "Delete", user_path(@user),
+                method: :delete,
+                data: { confirm: "Are you sure?" } %>
+        </div>
+    </div>
+</div>

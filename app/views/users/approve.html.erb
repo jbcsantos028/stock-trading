@@ -1,0 +1,43 @@
+<div class="mainContainer">
+
+    <div class="pageTitleContainer">
+        <div class="pageTitle">traders</div>
+    </div>
+
+    <div class="mainSubContainer">
+        <% if current_user.admin? %>
+            
+            <% @users.each do |user| %>
+                <div class="userContainer">
+                    <%= link_to user.email, user, class: "user-email" %>
+                    <div class="inline">
+                    <%# checkbox %>
+                    <%= form_with class: "checkbox", model: [ user ] do |f| %>
+                    <%= f.check_box :approve, class: "checkbox", onchange: "this.form.submit();" %>
+                    <% end %>
+
+                    <% if user.approved %>
+                        <div style="color:white;">approved</div>
+                    <% else %>
+                        pending
+                    <% end %>
+                </div>
+
+                <div class="smallLinkContainer">
+                    <div class="smallLink">
+                        <%= link_to "Show", user %>
+                    </div>
+                    <div class="smallLink">
+                        <%= link_to "Edit", edit_user_path(user) %>
+                    </div>
+                    <div class="smallLink">
+                        <%= link_to "Delete", user_path(user),
+                            method: :delete,
+                            data: { confirm: "Are you sure?" } %>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+        <% end %>
+    </div>
+</div>
