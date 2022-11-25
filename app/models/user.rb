@@ -16,4 +16,7 @@ class User < ApplicationRecord
     stocks.where(id: stock.id).exists?
   end
   
+  def trader?
+    !admin?
+  end
 end
