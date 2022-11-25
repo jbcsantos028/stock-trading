@@ -18,6 +18,7 @@ module TransactionsHelper
       attributes[:text_field_placeholder] =  "Number of shares to buy..."
       attributes[:submit_button_label] = "Buy #{stock.name}"
     end
+    
     attributes
     
   end
