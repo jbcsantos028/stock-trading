@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-require 'bigdecimal/util'
+  require 'bigdecimal/util'
 
   def index
     @owned_stocks = current_user.transactions
