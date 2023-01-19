@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :only_admin, only: :adminpanel
+  before_action :require_admin
 
   def adminpanel
     @users = User.where(admin: false)
@@ -9,17 +9,13 @@ class UsersController < ApplicationController
     @users = User.where(admin: false, approved: false)
   end
 
-  def index
-    if current_user.admin?
-      @users = User.where(admin: false)
-    end
-  end
+  # def index
+  #   @users = User.where(admin: false)
+  # end
 
   # GET /users/new
   def new
-    if current_user.admin?
-      @user = User.new
-    end
+    @user = User.new
   end
 
   # POST /users
@@ -40,9 +36,7 @@ class UsersController < ApplicationController
 
   # GET /users/:id/edit
   def edit
-    if current_user.admin?
-      @user = User.find(params[:id])
-    end
+    @user = User.find(params[:id])
   end
 
   # PATCH /users/:id
@@ -54,23 +48,33 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+
   end     
 
   # DELETE /users/:id
-  def destroy
-    if current_user.admin?
-      @user = User.find(params[:id])
-      @user.destroy
-    end
+  # def destroy
+  #   if current_user.admin?
+  #     @user = User.find(params[:id])
+  #     @user.destroy
+  #   end
 
-    redirect_to adminpanel_path
+  #   redirect_to adminpanel_path
+  # end
+
+  def approve_trader
+    user = User.find(params[:user_id])
+    user.update(approved: true)
+    flash[:notice] = "User has been approved!"
+    TraderAccountApprovalMailer.with(trader: user).trader_account_approved.deliver_now
+    redirect_to approve_path
   end
 
   private
 
-  def only_admin
-    if current_user.nil? || current_user.admin == false
-      redirect_to adminpanel_path
+  def require_admin
+    if !current_user.admin?
+      flash[:alert] = "Only admin can perform such action."
+      redirect_to my_portfolio_path
     end
   end
 

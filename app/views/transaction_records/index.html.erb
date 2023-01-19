@@ -15,7 +15,7 @@
       <tbody>
         <% @transaction_records.each do |transaction_record| %>
           <tr>
-            <th scope="row"><%= transaction_record.created_at %></th>
+            <th scope="row"><%= transaction_record.created_at.to_date %></th>
             <td><%= transaction_record.company_name %></td>
             <td><%= stock_shares = transaction_record.shares %></td>
             <td><%= price = transaction_record.price %></td>

@@ -8,11 +8,12 @@ class Stock < ApplicationRecord
     client = IEX::Api::Client.new(publishable_token: Rails.application.credentials.iex_client[:public_key],
                                   secret_token: Rails.application.credentials.iex_client[:secret_key],
                                   endpoint: 'https://cloud.iexapis.com/v1') #initializer
-    quote = client.quote(stock_symbol)
+    
 
     begin
+      quote = client.quote(stock_symbol)
       new(symbol: stock_symbol, name: quote.company_name, latest_price: quote.latest_price)
-    rescue
+    rescue IEX::Errors::SymbolNotFoundError
       return nil
     end
 
