@@ -5,14 +5,16 @@ Rails.application.configure do
 
   # Code is not reloaded between requests.
   config.cache_classes = true
-  
+
+  config.hosts << "stock-trading-production.up.railway.app"
+
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = {host: "", protocol: "https"}
+  config.action_mailer.default_url_options = {host: "stock-trading-production.up.railway.app", protocol: "https"}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     user_name:      Rails.application.credentials.dig(:google_smtp, :email),
     password:       Rails.application.credentials.dig(:google_smtp, :password),
-    domain:         "gmail.com",
+    domain:         "stock-trading-production.up.railway.app",
     address:       "smtp.gmail.com",
     port:          "587",
     authentication: :plain,
