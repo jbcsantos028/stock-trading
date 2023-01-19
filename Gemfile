@@ -60,4 +60,3 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'zeitwerk', '2.6.5'
-gem 'net-smtp'
