@@ -20,4 +20,5 @@ class User < ApplicationRecord
   def trader?
     !admin?
   end
+  
 end

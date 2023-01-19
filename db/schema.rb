@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 2022_11_24_101953) do
     t.string "symbol"
     t.string "name"
     t.decimal "latest_price"
-    t.decimal "shares"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -54,12 +53,12 @@ ActiveRecord::Schema.define(version: 2022_11_24_101953) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "admin", default: false
-    t.boolean "approved", default: false
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.boolean "admin", default: false
+    t.boolean "approved", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -1,43 +1,27 @@
-<div class="mainContainer">
+<h1>Trader Accounts with Pending Approval</h1>
+<div class="row">
+  <div class="col-9">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Trader Email</th>
+          <th scope="col"></th>
 
-    <div class="pageTitleContainer">
-        <div class="pageTitle">traders</div>
-    </div>
-
-    <div class="mainSubContainer">
-        <% if current_user.admin? %>
-            
-            <% @users.each do |user| %>
-                <div class="userContainer">
-                    <%= link_to user.email, user, class: "user-email" %>
-                    <div class="inline">
-                    <%# checkbox %>
-                    <%= form_with class: "checkbox", model: [ user ] do |f| %>
-                    <%= f.check_box :approve, class: "checkbox", onchange: "this.form.submit();" %>
-                    <% end %>
-
-                    <% if user.approved %>
-                        <div style="color:white;">approved</div>
-                    <% else %>
-                        pending
-                    <% end %>
-                </div>
-
-                <div class="smallLinkContainer">
-                    <div class="smallLink">
-                        <%= link_to "Show", user %>
-                    </div>
-                    <div class="smallLink">
-                        <%= link_to "Edit", edit_user_path(user) %>
-                    </div>
-                    <div class="smallLink">
-                        <%= link_to "Delete", user_path(user),
-                            method: :delete,
-                            data: { confirm: "Are you sure?" } %>
-                    </div>
-                </div>
-            </div>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <th scope="row"><%= link_to user.email, user, class: "user-email" %></th>
+            <td>
+                <%= form_with(url: approve_trader_path, method: :patch, class: "rounded", local: true) do |f| %>
+                    <%= f.hidden_field :user_id, :value => user.id %>
+                    <%= f.submit "Approve", class: "btn btn-success btn-sm" %>
+                <% end %>
+            </td>
+          </tr>
         <% end %>
-        <% end %>
-    </div>
+      </tbody>
+    </table>
+  </div>
 </div>

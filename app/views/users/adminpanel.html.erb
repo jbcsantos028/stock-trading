@@ -1,32 +1,31 @@
-<div class="mainContainer">
-
-    <div class="pageTitleContainer">
-        <div class="pageTitle">traders</div>
-    </div>
-
-    <div class="mainSubContainer">
-        <% if current_user.admin? %>
-            
-            <% @users.each do |user| %>
-                <div class="userContainer">
-                    <%= link_to user.email, user, class: "user-email" %>
-                    <%= user.approved %>
-
-                <div class="smallLinkContainer">
-                    <div class="smallLink">
-                        <%= link_to "Show", user %>
-                    </div>
-                    <div class="smallLink">
-                        <%= link_to "Edit", edit_user_path(user) %>
-                    </div>
-                    <div class="smallLink">
-                        <%= link_to "Delete", user_path(user),
-                            method: :delete,
-                            data: { confirm: "Are you sure?" } %>
-                    </div>
-                </div>
-            </div>
+<h1>List of all traders</h1>
+<div class="row">
+  <div class="col-9">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Trader Email</th>
+          <th scope="col">Trader Account Status</th>
+          <th scope="col"></th>
+          <th scope="col"</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <th scope="row"><%= link_to user.email, user, class: "user-email" %></th>
+            <td>
+              <% if user.approved? %>
+                Approved
+              <% else %>
+                Pending approval
+              <% end %>
+            </td>
+            <td><%= link_to "Show", user %></td>
+            <td><%= link_to "Edit", edit_user_path(user) %></td>
+          </tr>
         <% end %>
-        <% end %>
-    </div>
+      </tbody>
+    </table>
+  </div>
 </div>
